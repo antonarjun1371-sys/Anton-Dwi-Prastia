@@ -282,8 +282,8 @@ export const WishSection: React.FC<WishSectionProps> = ({ groomName, brideName }
                 >
                   <motion.div
                     initial={{ scale: 0, rotate: -90 }}
-                    animate={{ scale: [0, 1.25, 1], rotate: 0 }}
-                    transition={{ type: 'spring', stiffness: 350, damping: 18, delay: 0.05 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 14, delay: 0.05 }}
                     className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center flex-shrink-0 shadow-inner"
                   >
                     <CheckCircle2 className="w-6 h-6 text-emerald-400 stroke-[2.5]" />
