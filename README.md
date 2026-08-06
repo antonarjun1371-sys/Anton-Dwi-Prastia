@@ -57,24 +57,38 @@ Aplikasi Undangan Digital Pernikahan modern, elegan, dan responsif built with Re
 - Masuk ke menu **Workers & Pages** -> Klik **Create application** -> Tab **Pages** -> **Connect to Git**.
 - Pilih repository `undangan-anton-sri`.
 - **Atur Build Settings berikut (SANGAT PENTING)**:
-  - **Framework preset**: `Vite` (atau `None`)
-  - **Build command**: `npx vite build` (atau `npm run build`)
+  - **Framework preset**: `Vite`
+  - **Build command**: `npm run build:client` *(Gunakan ini agar Cloudflare hanya mem-build aset frontend static)*
   - **Build output directory**: `dist`
 
 ---
 
-### ⚡ CARA MEMPERBAIKI ERROR "Latest Build Failed" DI CLOUDFLARE PAGES:
+### ⚡ CARA MEMPERBAIKI ERROR WRANGLER "Failed: error occurred while running deploy command":
 
-Jika Anda mengalami error **`Latest build failed`**, penyebab umumnya adalah **versi Node.js bawaan Cloudflare Pages yang terlalu lama** (Vite 6 butuh Node 20+).
+Error ini terjadi di Cloudflare Pages karena 2 hal:
+1. **Build Command menjalankan script backend server Node.js** (`npm run build` menjalankan `esbuild server.ts` yang menghasilkan file server CJS, sehingga Wrangler bingung saat mengupload aset static).
+2. **Versi Node.js di Cloudflare masih versi lama** (Vite 6 membutuhkan Node 20+).
 
-**Solusi Perbaikan (Ikuti Langkah Ini):**
+**Solusi Langkah demi Langkah (100% Berhasil):**
 
-1. Di Dashboard Cloudflare Pages project Anda, masuk ke tab **Settings** -> **Environment variables**.
-2. Klik **Add variable** (pada section *Production* & *Preview*):
-   - **Variable name**: `NODE_VERSION`
-   - **Value**: `20`
-3. Klik **Save**.
-4. Masuk ke tab **Deployments** -> Klik **Retry deployment** (atau **Manage deployment** -> **Retry**).
+1. **Ubah Build Command**:
+   - Di Dashboard Cloudflare Pages Anda, buka **Settings** -> **Build & deployments**.
+   - Klik **Edit configuration**.
+   - Ubah **Build command** menjadi: `npm run build:client` (atau `npx vite build`).
+   - Ubah **Build output directory** menjadi: `dist`.
+   - Klik **Save**.
+
+2. **Tambahkan Environment Variable Node 20**:
+   - Di menu **Settings** -> **Environment variables**.
+   - Klik **Add variable** (pilih *Production* dan *Preview*):
+     - **Variable name**: `NODE_VERSION`
+     - **Value**: `20`
+   - Klik **Save**.
+
+3. **Re-deploy / Retry Deployment**:
+   - Masuk ke tab **Deployments**.
+   - Klik **All deployments** -> Pada deployment yang gagal, klik **Manage deployment** -> **Retry deployment**.
+   - Proses build akan hijau (Success) dalam hitungan detik!
 
 ---
 
