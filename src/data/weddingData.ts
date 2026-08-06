@@ -1,8 +1,8 @@
 import { WeddingData, WishMessage } from '../types';
 
-const heroCoupleImg = '/src/assets/images/wedding_hero_red_background_1786025860596.jpg';
-const groomImg = '/src/assets/images/groom_portrait_1786022950342.jpg';
-const brideImg = '/src/assets/images/bride_portrait_1786022966434.jpg';
+const heroCoupleImg = '/images/wedding_hero_red_background_1786025860596.jpg';
+const groomImg = '/images/groom_portrait_1786022950342.jpg';
+const brideImg = '/images/bride_portrait_1786022966434.jpg';
 
 export const initialWeddingData: WeddingData = {
   groom: {

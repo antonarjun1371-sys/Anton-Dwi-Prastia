@@ -11,7 +11,6 @@ Aplikasi Undangan Digital Pernikahan modern, elegan, dan responsif built with Re
 - **Amplop Digital & Kado**: Fitur salin nomor rekening BCA & Mandiri serta kirim kado.
 - **Buku Tamu & Ucapan**: Fitur kirim ucapan doa dan konfirmasi kehadiran (RSVP).
 - **Generator Link Tamu Khusus**: Buat link undangan personal untuk nama tamu tertentu.
-- **Panel Edit Manual (Foto & Font)**: Ubah foto dan font kaligrafi secara instan.
 
 ---
 
