@@ -138,6 +138,11 @@ export const initialWeddingData: WeddingData = {
     description: 'Kami menyarankan para tamu mengenakan pakaian bernuansa Formal / Batik Modern dengan palet warna Champagne, Sage Green, atau Neutral Cream.',
     paletteHexes: ['#D4AF37', '#8FBC8F', '#F5F5DC', '#2F4F4F', '#C0C0C0']
   },
+  themeSettings: {
+    scriptFont: 'Great Vibes',
+    serifFont: 'Cormorant Garamond',
+    heroPhotoUrl: heroCoupleImg
+  },
   audioTracks: [
     {
       title: 'Beautiful In White (Instrumental Piano)',

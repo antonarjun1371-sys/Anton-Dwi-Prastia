@@ -13,7 +13,6 @@ import { WishSection } from './components/WishSection';
 import { AudioPlayer } from './components/AudioPlayer';
 import { Navbar } from './components/Navbar';
 import { GuestLinkGenerator } from './components/GuestLinkGenerator';
-import { InvitationCustomizer } from './components/InvitationCustomizer';
 import { Heart } from 'lucide-react';
 
 export default function App() {
@@ -125,12 +124,6 @@ export default function App() {
           {/* Couple / Admin Guest Link Creator */}
           <GuestLinkGenerator
             weddingData={weddingData}
-          />
-
-          {/* Interactive Customizer for Photos and Fonts */}
-          <InvitationCustomizer
-            weddingData={weddingData}
-            onUpdateWeddingData={(newData) => setWeddingData(newData)}
           />
 
           {/* Luxury Footer */}
