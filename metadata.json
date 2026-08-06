@@ -1,0 +1,6 @@
+{
+  "name": "Undangan Digital Pernikahan Premium",
+  "description": "Undangan digital pernikahan premium dengan fitur komplit: RSVP, Buku Tamu, Galeri Foto, Digital Gift, Hitung Mundur, Musik Background, Cerita Cinta, dan AI Ucapan Doa.",
+  "requestFramePermissions": ["audio"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
