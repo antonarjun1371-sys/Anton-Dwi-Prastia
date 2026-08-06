@@ -12,6 +12,10 @@ async function startServer() {
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+  // Static images and assets routes
+  app.use('/images', express.static(path.join(process.cwd(), 'public/images')));
+  app.use('/src/assets', express.static(path.join(process.cwd(), 'src/assets')));
+
   // In-memory data store for live interactive demo
   let currentWeddingData: WeddingData = { ...initialWeddingData };
   let wishesList: WishMessage[] = [...initialWishes];
