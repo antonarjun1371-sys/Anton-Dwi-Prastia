@@ -36,31 +36,47 @@ Aplikasi Undangan Digital Pernikahan modern, elegan, dan responsif built with Re
 
 ---
 
-## 🌐 Panduan Hosting Gratis di Cloudflare Pages
+## 🌐 Panduan Deploy ke Cloudflare Pages (Bebas Error "Build Failed")
 
-1. **Upload Kode ke GitHub**:
-   - Buat repository baru di [GitHub](https://github.com/new) (contoh: `undangan-anton-sri`).
-   - Push kode project ke GitHub repository tersebut:
-     ```bash
-     git init
-     git add .
-     git commit -m "Initial commit - Undangan Anton & Sri"
-     git branch -M main
-     git remote add origin https://github.com/USERNAME/undangan-anton-sri.git
-     git push -u origin main
-     ```
+### 1. Upload Kode ke GitHub
+- Buat repository baru di [GitHub](https://github.com/new) (contoh: `undangan-anton-sri`).
+- Push semua file project ke GitHub:
+  ```bash
+  git init
+  git add .
+  git commit -m "Initial commit - Undangan Anton & Sri"
+  git branch -M main
+  git remote add origin https://github.com/USERNAME/undangan-anton-sri.git
+  git push -u origin main
+  ```
 
-2. **Deploy di Cloudflare Pages**:
-   - Buka Dashboard [Cloudflare](https://dash.cloudflare.com/).
-   - Masuk ke menu **Workers & Pages** -> Klik tombol **Create application** -> Pilih tab **Pages**.
-   - Pilih **Connect to Git** dan hubungkan dengan akun GitHub Anda.
-   - Pilih repository `undangan-anton-sri`.
-   - Atur **Build Settings**:
-     - **Framework preset**: `Vite`
-     - **Build command**: `npm run build`
-     - **Build output directory**: `dist`
-     - **Node.js Version**: `18` atau `20` (opsional)
-   - Klik **Save and Deploy**.
+---
 
-3. **Selesai!**
-   Cloudflare akan secara otomatis memproses *build* dan memberikan domain gratis seperti `undangan-anton-sri.pages.dev` yang siap disebarkan ke para tamu undangan.
+### 2. Pengaturan Deploy di Cloudflare Pages
+- Buka Dashboard [Cloudflare](https://dash.cloudflare.com/).
+- Masuk ke menu **Workers & Pages** -> Klik **Create application** -> Tab **Pages** -> **Connect to Git**.
+- Pilih repository `undangan-anton-sri`.
+- **Atur Build Settings berikut (SANGAT PENTING)**:
+  - **Framework preset**: `Vite` (atau `None`)
+  - **Build command**: `npx vite build` (atau `npm run build`)
+  - **Build output directory**: `dist`
+
+---
+
+### ⚡ CARA MEMPERBAIKI ERROR "Latest Build Failed" DI CLOUDFLARE PAGES:
+
+Jika Anda mengalami error **`Latest build failed`**, penyebab umumnya adalah **versi Node.js bawaan Cloudflare Pages yang terlalu lama** (Vite 6 butuh Node 20+).
+
+**Solusi Perbaikan (Ikuti Langkah Ini):**
+
+1. Di Dashboard Cloudflare Pages project Anda, masuk ke tab **Settings** -> **Environment variables**.
+2. Klik **Add variable** (pada section *Production* & *Preview*):
+   - **Variable name**: `NODE_VERSION`
+   - **Value**: `20`
+3. Klik **Save**.
+4. Masuk ke tab **Deployments** -> Klik **Retry deployment** (atau **Manage deployment** -> **Retry**).
+
+---
+
+### 3. Selesai!
+Aplikasi akan sukses ter-build dan Anda mendapatkan URL publik gratis seperti `https://undangan-anton-sri.pages.dev` yang siap disebarkan ke para tamu undangan.
