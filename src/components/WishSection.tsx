@@ -271,16 +271,34 @@ export const WishSection: React.FC<WishSectionProps> = ({ groomName, brideName }
               <span>Kirim Ucapan &amp; Konfirmasi RSVP</span>
             </button>
 
-            {successMsg && (
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs text-center flex items-center justify-center gap-2"
-              >
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Terima kasih! Ucapan &amp; Konfirmasi RSVP Anda berhasil tersimpan.</span>
-              </motion.div>
-            )}
+            <AnimatePresence>
+              {successMsg && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                  transition={{ duration: 0.35, ease: 'easeOut' }}
+                  className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-xs text-center flex flex-col sm:flex-row items-center justify-center gap-3 shadow-lg shadow-emerald-950/50 backdrop-blur-md"
+                >
+                  <motion.div
+                    initial={{ scale: 0, rotate: -90 }}
+                    animate={{ scale: [0, 1.25, 1], rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 350, damping: 18, delay: 0.05 }}
+                    className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center flex-shrink-0 shadow-inner"
+                  >
+                    <CheckCircle2 className="w-6 h-6 text-emerald-400 stroke-[2.5]" />
+                  </motion.div>
+                  <div className="text-center sm:text-left">
+                    <p className="font-semibold text-emerald-200 text-sm">
+                      Konfirmasi Berhasil Terkirim!
+                    </p>
+                    <p className="text-emerald-300/80 text-[11px] mt-0.5">
+                      Terima kasih! Ucapan &amp; Konfirmasi RSVP Anda berhasil tersimpan.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </form>
         </div>
 
