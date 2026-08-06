@@ -36,19 +36,51 @@ export const InvitationCustomizer: React.FC<InvitationCustomizerProps> = ({
 
   const [heroPhoto, setHeroPhoto] = useState(weddingData.themeSettings?.heroPhotoUrl || weddingData.stories[3]?.image || '/src/assets/images/wedding_hero_red_background_1786025860596.jpg');
 
-  // Handle local file upload converting to Data URL
+  // Helper to compress uploaded images via Canvas
+  const compressAndSetImage = (file: File, setter: (val: string) => void) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxDim = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          setter(compressedDataUrl);
+        } else {
+          setter(e.target?.result as string);
+        }
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Handle local file upload converting to Data URL with compression
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, target: 'hero' | 'groom' | 'bride') => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      if (target === 'hero') setHeroPhoto(result);
-      if (target === 'groom') setGroomPhoto(result);
-      if (target === 'bride') setBridePhoto(result);
-    };
-    reader.readAsDataURL(file);
+    if (target === 'hero') compressAndSetImage(file, setHeroPhoto);
+    if (target === 'groom') compressAndSetImage(file, setGroomPhoto);
+    if (target === 'bride') compressAndSetImage(file, setBridePhoto);
   };
 
   const handleSave = async () => {
@@ -97,12 +129,23 @@ export const InvitationCustomizer: React.FC<InvitationCustomizerProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData),
       });
-      const data = await res.json();
-      if (data.success) {
-        onUpdateWeddingData(updatedData);
-        setSaveSuccess(true);
-        setTimeout(() => setSaveSuccess(false), 3000);
+
+      if (!res.ok) {
+        const text = await res.text();
+        let errMsg = 'Gagal menyimpan data';
+        try {
+          const errJson = JSON.parse(text);
+          errMsg = errJson.error || errMsg;
+        } catch (_) {}
+        console.warn('Server error:', errMsg);
+      } else {
+        const data = await res.json();
+        if (data.success) {
+          setSaveSuccess(true);
+          setTimeout(() => setSaveSuccess(false), 3000);
+        }
       }
+      onUpdateWeddingData(updatedData);
     } catch (err) {
       console.error(err);
       onUpdateWeddingData(updatedData);
